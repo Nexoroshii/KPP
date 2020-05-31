@@ -1,0 +1,48 @@
+object Hooks {
+
+  val res: Int =0
+  var res1 = List('(')
+  var res2=List(')')
+  var resList:List[Any]=List()
+
+
+   def getList(list: List[Char]):List[Any] = list match{
+    case Nil => Nil
+    case list => {
+      def getNum(list: List[Char], res: Int): Int = list match {
+        case Nil => res
+        case head :: tail => {
+          def cmpValue(x:Int): Int = res match {
+            case x if (head == ')') => getNum(tail, res.-(1))
+            case x if (head =='(') => getNum(tail, res.+(1))
+          }
+          cmpValue(head)
+        }
+      }
+val rr = getNum (list, res)
+      var res3=list
+      def getRes(res3: List[Char], res: Int): Unit = res3 match {
+        case Nil => res
+        case head :: tail => {
+          def cmpValue1(x:Int): Unit = res3 match {
+            case x if (rr < 0) =>{
+              resList = res1:::list
+              getRes(tail, res)}
+            case x if (rr > 0) =>{
+              resList =  list:::res2
+              getRes(tail, res)
+            }             
+              
+          }
+          cmpValue1(head)
+        }
+      }
+      val rrr=getRes(res3,rr)
+      resList
+    }
+   }
+
+  def main(args:Array[String]): Unit = {
+    print(getList(List('(',')',')','(','(',')','(')))
+  }
+}
